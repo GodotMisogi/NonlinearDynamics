@@ -31,22 +31,18 @@ end
 ##
 ηs    = (0.0, 10.0)
 x0    = [5.0, 2.0, 0.0] 
-as    = range(-0.2, 0.2, length = 20)
+as    = range(-0.2, 0.2, length = 10)
 
 ##
-prob  = BVProblem.(Ref(falkner_skan_ODE!), Ref(falkner_skan_BC!), Ref(x0), Ref(ηs), as)
+prob  = BVProblem.(Ref(falkner_skan_ODE!), Ref(falkner_skan_BC!), Ref(x0), Ref(ηs), as, syms = Ref([:y, :δ]))
 sol   = solve.(prob, Ref(GeneralMIRK4()), dt = 2e-1)
 
 ##
 using Plots
 plotly(dpi = 300, size = (800, 600), legend = :left)
 
-# using S
-
 ##
-cock = Plots.plot(xaxis = "", 
-                  yaxis = "η = n/δ",
-                  linewidth = 2)
-[ Plots.plot!(solution, label = "U/Uₑ = $a", vars = [(2, 0)]) for (solution, a) in zip(sol, as) ]
+plt = Plots.plot()
+[ Plots.plot!(solution, label = "U/Uₑ = $a", xaxis = "ξ", yaxis = "η = y/δ", vars = [(2, 0)]) for (solution, a) in zip(sol, as) ]
 Plots.plot!()
-Plots.savefig(cock, "lol.json")
+Plots.savefig(plt, "lol.json")
