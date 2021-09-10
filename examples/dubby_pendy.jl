@@ -96,10 +96,12 @@ plt_phase_θ = plot((x0[1], x0[2]), xlabel = "θ₁", ylabel = "θ₂", color = 
 plt_phase_p = plot((x0[3], x0[4]), xlabel = "p₁", ylabel = "p₂", color = :darkblue, label = :none)
 plt_time_θ  = plot([0.], [x0[1:2]'], xlabel = "t", label = ["θ₁" "θ₂"]);
 plt_time_p  = plot([0.], [x0[3:4]'], xlabel = "t", label = ["p₁" "p₂"], color = [:green :purple]);
+plt_all     = plot(title = "Double Pendulum", framestyle = nothing, showaxis = false, xticks = false, yticks = false, bottommargin = -10Plots.px)
 
 
+anim = Animation() 
 n    = length(ts)
-anim = @animate for i ∈ 1:n
+for i ∈ 1:n
     # Coordinates
     plt_coords = plot(c = :black, xlabel = "x", ylabel = "y")
     plot!(plt_coords, ly1[i], -lx1[i], label = :none)
@@ -122,8 +124,11 @@ anim = @animate for i ∈ 1:n
     plt_times  = plot(plt_time_θ, plt_time_p, layout = (2,1))
     plt_phapes = plot(plt_phase_θ, plt_phase_p, layout = (2,1))
     plt_phases = plot(plt_phase_1, plt_phase_2, layout = (2,1))
-    plt = plot(plt_coords, plt_phases, plt_times, plt_phapes, size = (900, 900), layout = @layout [a{0.5h} b; c d])
+    plot!(plt_all, plt_coords, plt_phases, plt_times, plt_phapes, size = (900, 910), layout = @layout [a{0.01h}; b c; d e])
+
+    frame(anim)
 end
 
 ##
-gif(anim, "plots/dubbypendy.gif", fps = 30)
+# gif(anim, "plots/dubbypendy.gif", fps = 30)
+mp4(anim, "plots/dubbypendy.mp4", fps = 30)
