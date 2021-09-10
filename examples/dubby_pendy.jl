@@ -50,7 +50,10 @@ plt_phase_θ = plot(sol, vars = (:θ₁,:θ₂), xlabel = "θ₁", ylabel = "θ�
 plt_phase_p = plot(sol, vars = (:p₁,:p₂), xlabel = "p₁", ylabel = "p₂", label = :none);
 
 ## Layout
-plt = plot(plt_time_θ, plt_time_p, plt_phase_1, plt_phase_2, plt_phase_θ, plt_phase_p, layout = (3,2))
+plt_times  = plot(plt_time_θ, plt_time_p, layout = (1,2))
+plt_phapes = plot(plt_phase_θ, plt_phase_p, layout = (1,2))
+plt_phases = plot(plt_phase_1, plt_phase_2, layout = (1,2))
+plt        = plot(plt_times, plt_phapes, plt_phases, size = (900, 900), layout = @layout [a; b; c])
 
 ## Animation
 gr()
