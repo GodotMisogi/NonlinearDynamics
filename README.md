@@ -3,4 +3,4 @@ Playing around with nonlinear dynamics and chaos in Julia.
 
 ## Double Pendulum
 
-![](plots/dubbypendy-all.gif)
+![](plots/dubbypendy-new.gif)
