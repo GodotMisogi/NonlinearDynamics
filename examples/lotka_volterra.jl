@@ -1,5 +1,5 @@
 ## Packages
-using DifferentialEquations
+using DifferentialEquations, DiffEqSensitivity
 using DataFrames
 using Plots, LaTeXStrings
 
@@ -25,6 +25,11 @@ sol   = solve(prob)
 
 ## DataFrame generation
 df = DataFrame(sol)
+
+## Sensitivity analysis (Fails, just placing it here as a reminder for now)
+dg(out,u,p,t,i) = (out.=1.0.-u)
+ts = 0:0.5:100
+du0, dp = adjoint_sensitivities(sol, RK4(), dg, ts; sensealg=ZygoteAdjoint())
 
 ## Plotting
 
